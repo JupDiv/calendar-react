@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { months } from '../../utils/dateUtils';
+import { months, getWeekStartDate } from '../../utils/dateUtils';
 import moment from 'moment';
 
 import './header.scss';
 
-const Header = () => {
+const Header = ({ weekDates, currentDay }) => {
   const [time, onUpdateTime] = useState(moment(new Date()).format('LTS'));
 
   useEffect(() => {
@@ -16,6 +16,40 @@ const Header = () => {
       clearInterval(interval);
     };
   }, []);
+
+  /*
+  1.Получаем текущий месяц
+    * Берем переданный массив недели
+    * Через фильтр проходимся по массиву у элемениов дастаем день и справниваем с текущим днем
+    * Если фильтре получили true то мы этот день возвращаем, точнее дату
+    * Дату мы переводим в число месяца по JS январь 0 ... декабрь 11
+    * Это число индекс массива которую присваеваем в переменную
+  2.Получить текущих месяцы если мы попадаем на смену месяца
+    * условие если к понедельнику прибавить 6 дней и месяц  будет больше  чем придыдущий 
+   * то мы присваевываем в переменую месяц текущий и следующий
+   * если месяц такойже присваевываем переменной текущий месяц
+  */
+
+  const currentMonth = new Date(
+    weekDates.filter(elem => elem.getDay() === currentDay.getDay()),
+  ).getMonth();
+
+  const nextMonth = new Date(
+    weekDates.filter((elem, index) => {
+      if (elem.getDate() === 1 && index > 1) {
+        return elem;
+      }
+    }),
+  ).getMonth();
+
+  const checkNextMonth = new Date(
+    getWeekStartDate(currentDay).setDate(currentDay.getDate() + 6),
+  ).getMonth();
+
+  const month =
+    checkNextMonth > currentMonth
+      ? `${months[currentMonth]} - ${months[nextMonth]}`
+      : `${months[currentMonth]}`;
 
   return (
     <>
@@ -38,7 +72,7 @@ const Header = () => {
           <button className="icon-button navigation__nav-icon">
             <i className="fas fa-chevron-right"></i>
           </button>
-          <span className="navigation__displayed-month">month</span>
+          <span className="navigation__displayed-month">{month}</span>
         </div>
         <div className="clock">{time}</div>
       </header>
