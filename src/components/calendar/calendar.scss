@@ -54,6 +54,10 @@
   align-items: center;
   justify-content: space-around;
   opacity: 0.6;
+  border: 1px solid #eee;
+  border-bottom: none;
+  border-right: none;
+  border-top: none;
 
   &__day-name {
     font-size: 14px;
