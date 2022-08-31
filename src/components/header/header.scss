@@ -16,6 +16,7 @@
 .navigation {
   &__today-btn {
     margin-left: 32px;
+
     padding: 0 16px;
   }
 
@@ -27,4 +28,14 @@
   &__displayed-month {
     margin-left: 10px;
   }
+}
+
+.clock {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  border: 1px #ccc solid;
+  padding: 8px;
+  border-radius: 8px;
+  height: 40px;
 }
