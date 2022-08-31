@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import './header.scss';
 
-const Header = ({ weekDates, currentDay }) => {
+const Header = ({ weekDates, currentDay, func }) => {
   const [time, onUpdateTime] = useState(moment(new Date()).format('LTS'));
 
   useEffect(() => {
@@ -67,10 +67,20 @@ const Header = ({ weekDates, currentDay }) => {
         <div className="navigation">
           <button className="navigation__today-btn button">Today</button>
           <button className="icon-button navigation__nav-icon">
-            <i className="fas fa-chevron-left"></i>
+            <i
+              className="fas fa-chevron-left"
+              onClick={() =>
+                func(new Date(getWeekStartDate(currentDay).setDate(currentDay.getDate() - 6)))
+              }
+            ></i>
           </button>
           <button className="icon-button navigation__nav-icon">
-            <i className="fas fa-chevron-right"></i>
+            <i
+              className="fas fa-chevron-right"
+              onClick={() =>
+                func(new Date(getWeekStartDate(currentDay).setDate(currentDay.getDate() + 6)))
+              }
+            ></i>
           </button>
           <span className="navigation__displayed-month">{month}</span>
         </div>
