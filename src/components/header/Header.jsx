@@ -30,26 +30,14 @@ const Header = ({ weekDates, currentDay, func }) => {
    * если месяц такойже присваевываем переменной текущий месяц
   */
 
-  const currentMonth = new Date(
-    weekDates.filter(elem => elem.getDay() === currentDay.getDay()),
-  ).getMonth();
-
-  const nextMonth = new Date(
-    weekDates.filter((elem, index) => {
-      if (elem.getDate() === 1 && index > 1) {
-        return elem;
-      }
-    }),
-  ).getMonth();
-
-  const checkNextMonth = new Date(
-    getWeekStartDate(currentDay).setDate(currentDay.getDate() + 6),
-  ).getMonth();
+  const currentMonth = moment(getWeekStartDate(currentDay)).format('MMM');
+  const nextMonth = moment(getWeekStartDate(currentDay)).add(1, 'M').format('MMM');
+  console.log(getWeekStartDate(currentDay).getDate());
 
   const month =
-    checkNextMonth > currentMonth
-      ? `${months[currentMonth]} - ${months[nextMonth]}`
-      : `${months[currentMonth]}`;
+    getWeekStartDate(currentDay).getDate() >= 24
+      ? `${currentMonth} - ${nextMonth}`
+      : `${currentMonth}`;
 
   return (
     <>
@@ -65,12 +53,20 @@ const Header = ({ weekDates, currentDay, func }) => {
           <span className="button_create-task-text">Create</span>
         </button>
         <div className="navigation">
-          <button className="navigation__today-btn button">Today</button>
+          <button className="navigation__today-btn button" onClick={() => func(new Date())}>
+            Today
+          </button>
           <button className="icon-button navigation__nav-icon">
             <i
               className="fas fa-chevron-left"
               onClick={() =>
-                func(new Date(getWeekStartDate(currentDay).setDate(currentDay.getDate() - 6)))
+                func(
+                  new Date(
+                    getWeekStartDate(currentDay).setDate(
+                      getWeekStartDate(currentDay).getDate() - 7,
+                    ),
+                  ),
+                )
               }
             ></i>
           </button>
@@ -78,7 +74,13 @@ const Header = ({ weekDates, currentDay, func }) => {
             <i
               className="fas fa-chevron-right"
               onClick={() =>
-                func(new Date(getWeekStartDate(currentDay).setDate(currentDay.getDate() + 6)))
+                func(
+                  new Date(
+                    getWeekStartDate(currentDay).setDate(
+                      getWeekStartDate(currentDay).getDate() + 7,
+                    ),
+                  ),
+                )
               }
             ></i>
           </button>
