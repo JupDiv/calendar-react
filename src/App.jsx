@@ -9,10 +9,16 @@ import './common.scss';
 const App = () => {
   const [weekStartDate, onHandlerChangeData] = useState(new Date());
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+  const [isOpen, onHandlerModalWind] = useState(false);
   return (
     <>
-      <Header weekDates={weekDates} currentDay={weekStartDate} func={onHandlerChangeData} />
-      <Calendar weekDates={weekDates} />
+      <Header
+        isOpen={onHandlerModalWind}
+        weekDates={weekDates}
+        currentDay={weekStartDate}
+        onChangeDate={onHandlerChangeData}
+      />
+      <Calendar isClose={onHandlerModalWind} statusModalWindow={isOpen} weekDates={weekDates} />
     </>
   );
 };

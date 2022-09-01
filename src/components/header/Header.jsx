@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import './header.scss';
 
-const Header = ({ weekDates, currentDay, func }) => {
+const Header = ({ currentDay, onChangeDate, isOpen }) => {
   const [time, onUpdateTime] = useState(moment(new Date()).format('LTS'));
 
   useEffect(() => {
@@ -17,22 +17,8 @@ const Header = ({ weekDates, currentDay, func }) => {
     };
   }, []);
 
-  /*
-  1.Получаем текущий месяц
-    * Берем переданный массив недели
-    * Через фильтр проходимся по массиву у элемениов дастаем день и справниваем с текущим днем
-    * Если фильтре получили true то мы этот день возвращаем, точнее дату
-    * Дату мы переводим в число месяца по JS январь 0 ... декабрь 11
-    * Это число индекс массива которую присваеваем в переменную
-  2.Получить текущих месяцы если мы попадаем на смену месяца
-    * условие если к понедельнику прибавить 6 дней и месяц  будет больше  чем придыдущий 
-   * то мы присваевываем в переменую месяц текущий и следующий
-   * если месяц такойже присваевываем переменной текущий месяц
-  */
-
   const currentMonth = moment(getWeekStartDate(currentDay)).format('MMM');
   const nextMonth = moment(getWeekStartDate(currentDay)).add(1, 'M').format('MMM');
-  console.log(getWeekStartDate(currentDay).getDate());
 
   const month =
     getWeekStartDate(currentDay).getDate() >= 24
@@ -50,17 +36,19 @@ const Header = ({ weekDates, currentDay, func }) => {
             <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
             <path fill="none" d="M0 0h36v36H0z"></path>
           </svg>
-          <span className="button_create-task-text">Create</span>
+          <span className="button_create-task-text" onClick={() => isOpen(true)}>
+            Create
+          </span>
         </button>
         <div className="navigation">
-          <button className="navigation__today-btn button" onClick={() => func(new Date())}>
+          <button className="navigation__today-btn button" onClick={() => onChangeDate(new Date())}>
             Today
           </button>
           <button className="icon-button navigation__nav-icon">
             <i
               className="fas fa-chevron-left"
               onClick={() =>
-                func(
+                onChangeDate(
                   new Date(
                     getWeekStartDate(currentDay).setDate(
                       getWeekStartDate(currentDay).getDate() - 7,
@@ -74,7 +62,7 @@ const Header = ({ weekDates, currentDay, func }) => {
             <i
               className="fas fa-chevron-right"
               onClick={() =>
-                func(
+                onChangeDate(
                   new Date(
                     getWeekStartDate(currentDay).setDate(
                       getWeekStartDate(currentDay).getDate() + 7,

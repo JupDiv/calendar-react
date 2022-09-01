@@ -6,8 +6,9 @@ import Sidebar from '../sidebar/Sidebar';
 import events from '../../gateway/events';
 
 import './calendar.scss';
+import Modal from '../modal/Modal';
 
-const Calendar = ({ weekDates }) => {
+const Calendar = ({ weekDates, statusModalWindow, isClose }) => {
   const [eventsList] = useState(events);
 
   return (
@@ -16,6 +17,7 @@ const Calendar = ({ weekDates }) => {
       <div className="calendar__body">
         <div className="calendar__week-container">
           <Sidebar />
+          {statusModalWindow ? <Modal isClose={isClose} /> : null}
           <Week weekDates={weekDates} events={eventsList} />
         </div>
       </div>
