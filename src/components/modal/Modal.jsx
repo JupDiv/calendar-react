@@ -12,12 +12,14 @@ const Modal = ({ isClose }) => {
     startTime: moment().format('HH:mm'),
     endTime: moment().format('HH:mm'),
   });
+
   const { title, description, date, startTime, endTime } = task;
 
-  const onHabdlerAddTask = e => {
+  const onHabdlerTask = e => {
+    e.preventDefault();
     const { name, value } = e.target;
+    console.log('Yes');
     onCreateTask({
-      ...task,
       [name]: value,
     });
   };
@@ -42,15 +44,9 @@ const Modal = ({ isClose }) => {
           <button onClick={() => isClose(false)} className="create-event__close-btn">
             +
           </button>
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              onHabdlerAddTask;
-            }}
-            className="event-form"
-          >
+          <form className="event-form">
             <input
-              onChange={onHabdlerAddTask}
+              onChange={onHabdlerTask}
               type="text"
               name="title"
               placeholder="Title"
@@ -59,14 +55,14 @@ const Modal = ({ isClose }) => {
             />
             <div className="event-form__time">
               <input
-                onChange={onHabdlerAddTask}
+                onChange={onHabdlerTask}
                 defaultValue={date}
                 type="date"
                 name="date"
                 className="event-form__field"
               />
               <input
-                onChange={onHabdlerAddTask}
+                onChange={onHabdlerTask}
                 type="time"
                 name="startTime"
                 className="event-form__field"
@@ -74,7 +70,7 @@ const Modal = ({ isClose }) => {
               />
               <span>-</span>
               <input
-                onChange={onHabdlerAddTask}
+                onChange={onHabdlerTask}
                 defaultValue={endTime}
                 type="time"
                 name="endTime"
@@ -82,7 +78,7 @@ const Modal = ({ isClose }) => {
               />
             </div>
             <textarea
-              onChange={onHabdlerAddTask}
+              onChange={onHabdlerTask}
               name="description"
               placeholder="Description"
               className="event-form__field"
