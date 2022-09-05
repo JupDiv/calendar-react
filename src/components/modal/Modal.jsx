@@ -18,8 +18,8 @@ const Modal = ({ isClose }) => {
   const onHabdlerTask = e => {
     e.preventDefault();
     const { name, value } = e.target;
-    console.log('Yes');
     onCreateTask({
+      ...task,
       [name]: value,
     });
   };
