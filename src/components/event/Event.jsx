@@ -8,7 +8,6 @@ const Event = ({ id, height, marginTop, title, time }) => {
     height,
     marginTop,
   };
-
   const onDeleteEvent = () => {
     events.map(event => event.id === id);
   };
