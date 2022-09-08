@@ -14,7 +14,6 @@ const App = () => {
     <>
       <Header
         isOpen={onHandlerModalWind}
-        weekDates={weekDates}
         currentDay={weekStartDate}
         onChangeDate={onHandlerChangeData}
       />

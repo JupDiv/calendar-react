@@ -63,14 +63,29 @@
     font-size: 14px;
     text-transform: uppercase;
   }
+  &__day-name_current {
+    color: blue;
+  }
 
   &__day-number {
     font-size: 22px;
+  }
+
+  &__day-number_current {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: blue;
+    border-radius: 50%;
+    color: white;
   }
 }
 
 .red-line {
   position: absolute;
+  margin: 0;
   width: 100%;
   border-top: 2px solid red;
   z-index: 5;

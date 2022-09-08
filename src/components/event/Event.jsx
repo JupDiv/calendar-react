@@ -1,15 +1,16 @@
 import React from 'react';
-import events from '../../gateway/events';
+import { handlerDeleteTask } from '../../gateway/events';
+import propTypes from 'prop-types';
 
 import './event.scss';
 
-const Event = ({ id, height, marginTop, title, time }) => {
+const Event = ({ id, height, marginTop, title, time, onUpdateListTasks }) => {
   const eventStyle = {
     height,
     marginTop,
   };
   const onDeleteEvent = () => {
-    events.map(event => event.id === id);
+    handlerDeleteTask(id).then(() => onUpdateListTasks());
   };
 
   return (
@@ -21,6 +22,15 @@ const Event = ({ id, height, marginTop, title, time }) => {
       <div className="event__time">{time}</div>
     </div>
   );
+};
+
+Event.propTypes = {
+  id: propTypes.number.isRequired,
+  height: propTypes.number.isRequired,
+  marginTop: propTypes.number.isRequired,
+  title: propTypes.string.isRequired,
+  time: propTypes.string.isRequired,
+  onUpdateListTasks: propTypes.func.isRequired,
 };
 
 export default Event;

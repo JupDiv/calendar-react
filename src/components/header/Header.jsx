@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { months, getWeekStartDate } from '../../utils/dateUtils';
+import { getWeekStartDate } from '../../utils/dateUtils';
+import propTypes from 'prop-types';
 import moment from 'moment';
+moment.locale('en-gb');
 
 import './header.scss';
 
@@ -79,6 +81,12 @@ const Header = ({ currentDay, onChangeDate, isOpen }) => {
       <hr className="header-line" />
     </>
   );
+};
+
+Header.propTypes = {
+  currentDay: propTypes.instanceOf(Date),
+  onChangeDate: propTypes.func.isRequired,
+  isOpen: propTypes.func.isRequired,
 };
 
 export default Header;

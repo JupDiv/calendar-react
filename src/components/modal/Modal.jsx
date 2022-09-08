@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import events from '../../gateway/events';
+import React, { useState } from 'react';
+import { handlerAddTask } from '../../gateway/events';
 import moment from 'moment';
+import propTypes from 'prop-types';
 
 import './modal.scss';
 
-const Modal = ({ isClose }) => {
+const Modal = ({ isClose, onUpdateListTasks }) => {
   const [task, onCreateTask] = useState({
     title: '',
     description: '',
     date: moment(new Date()).format('YYYY-MM-DD'),
     startTime: moment().format('HH:mm'),
-    endTime: moment().format('HH:mm'),
+    endTime: moment().add(15, 'minutes').format('HH:mm'),
   });
 
   const { title, description, date, startTime, endTime } = task;
@@ -26,14 +27,13 @@ const Modal = ({ isClose }) => {
 
   const addHandlerTask = () => {
     const createTask = {
-      id: events.length + 1,
       title,
       description,
       dateFrom: new Date(`${date} ${startTime}`),
       dateTo: new Date(`${date} ${endTime}`),
     };
 
-    events.push(createTask);
+    handlerAddTask(createTask).then(() => onUpdateListTasks());
     isClose(false);
   };
 
@@ -94,40 +94,9 @@ const Modal = ({ isClose }) => {
   );
 };
 
-// class Modal extends Component {
-//   render() {
-//     return (
-//       <div className="modal overlay">
-//         <div className="modal__content">
-//           <div className="create-event">
-//             <button className="create-event__close-btn">+</button>
-//             <form className="event-form">
-//               <input type="text" name="title" placeholder="Title" className="event-form__field" />
-//               <div className="event-form__time">
-//                 <input type="date" name="date" className="event-form__field" />
-//                 <input
-//                   type="time"
-//                   name="startTime"
-//                   className="event-form__field"
-//                   onChange={this.handleChange}
-//                 />
-//                 <span>-</span>
-//                 <input type="time" name="endTime" className="event-form__field" />
-//               </div>
-//               <textarea
-//                 name="description"
-//                 placeholder="Description"
-//                 className="event-form__field"
-//               ></textarea>
-//               <button type="submit" className="event-form__submit-btn">
-//                 Create
-//               </button>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+Modal.propTypes = {
+  isClose: propTypes.bool.isRequired,
+  onUpdateListTasks: propTypes.func.isRequired,
+};
 
 export default Modal;

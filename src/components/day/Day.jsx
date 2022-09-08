@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Hour from '../hour/Hour';
+import propTypes from 'prop-types';
 
 import './day.scss';
 
-const Day = ({ dataDay, dayEvents }) => {
+const Day = ({ dataDay, dayEvents, onUpdateListTasks }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
@@ -15,11 +16,23 @@ const Day = ({ dataDay, dayEvents }) => {
         const hourEvents = dayEvents.filter(event => event.dateFrom.getHours() === hour);
 
         return (
-          <Hour dataDay={dataDay} key={dataDay + hour} dataHour={hour} hourEvents={hourEvents} />
+          <Hour
+            onUpdateListTasks={onUpdateListTasks}
+            dataDay={dataDay}
+            key={dataDay + hour}
+            dataHour={hour}
+            hourEvents={hourEvents}
+          />
         );
       })}
     </div>
   );
+};
+
+Day.propTypes = {
+  dataDay: propTypes.number.isRequired,
+  dayEvents: propTypes.array.isRequired,
+  onUpdateListTasks: propTypes.func.isRequired,
 };
 
 export default Day;
