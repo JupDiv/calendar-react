@@ -7,7 +7,7 @@ import propTypes from 'prop-types';
 
 import './calendar.scss';
 import Modal from '../modal/Modal';
-//
+
 const Calendar = ({ weekDates, statusModalWindow, isClose }) => {
   const [eventsList, updateEventsList] = useState([]);
 
