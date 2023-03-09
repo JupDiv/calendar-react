@@ -1,0 +1,78 @@
+.button {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #fff;
+  width: 100px;
+
+  &_create-task {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0;
+    border-radius: 48px 48px;
+    width: 130px;
+  }
+  &_create-task-icon {
+    padding: 0;
+  }
+  &_create-task-text {
+    margin: 0 8px 0 8px;
+  }
+}
+
+.icon-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    background: #fff;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #cccccc45;
+  z-index: 10;
+}
+
+.popup {
+  &__content {
+    position: absolute;
+    background: #fff;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.header-line {
+  margin: 0;
+  margin-bottom: 15px;
+  border: none;
+  border-top: 1px solid #ccc;
+}
